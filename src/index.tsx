@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { getDefaultConfig, RainbowKitProvider } from "@rainbow-me/rainbowkit";
@@ -54,9 +54,18 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+const theme = extendTheme({
+  breakpoints: {
+    base: "0em", // 默认
+    sm: "30em", // 小屏幕
+    md: "48em", // 中等屏幕
+    lg: "62em", // 大屏幕
+    xl: "80em"
+  },
+});
 root.render(
-  <React.StrictMode>
-    <ChakraProvider>
+  // <React.StrictMode>
+    <ChakraProvider theme={theme}>
       <WagmiProvider config={config}>
         <QueryClientProvider client={queryClient}>
           <RainbowKitProvider>
@@ -65,7 +74,7 @@ root.render(
         </QueryClientProvider>
       </WagmiProvider>
     </ChakraProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
