@@ -56,7 +56,7 @@ const root = ReactDOM.createRoot(
 );
 const theme = extendTheme({
   breakpoints: {
-    base: "0em", // 默认
+    base: "20em", // 默认
     sm: "30em", // 小屏幕
     md: "48em", // 中等屏幕
     lg: "62em", // 大屏幕

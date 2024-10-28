@@ -5,8 +5,12 @@ body {
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
+html, body {
+  font-size: 10px;
+}
 @keyframes typing {
   0% { width: 0;}
   100% {width: 26ch;}
