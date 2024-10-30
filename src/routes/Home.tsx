@@ -12,7 +12,7 @@ const Home = () => {
       renderer: 'svg',
       loop: true, 
       autoplay: false, 
-      path: 'data_all.json' 
+      path: 'data_all2.json' 
     });
     animation.addEventListener('data_ready', () => {
         console.log('ready')
