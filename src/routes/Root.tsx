@@ -18,12 +18,15 @@ const Root = () => {
   //   console.log('animation>>>>',animation)
   // }, [])
   return (
-    <Flex w="100vw" h="100vh" flexDir={"column"} gap={3} background={'linear-gradient(180deg, #C6E3A0 -3.8%, #F9FBF8 100.99%)'}>
-      <Box id="bg" position={'absolute'} top={'0'} left={'0'} w="100vw"></Box>
+    <Flex w="100vw" flexDir={"column"} gap={3} background={'linear-gradient(180deg, #C6E3A0 -3.8%, #F9FBF8 100.99%)'}>
+      {/* <Box id="bg" position={'absolute'} top={'0'} left={'0'} w="100vw"></Box> */}
       <Header />
       <Box flex={1}>
         <Outlet />
       </Box>
+      <Box backdropFilter={'blur(125px)'} background={'#90C147'} 
+
+      ></Box>
     </Flex>
   );
 };
