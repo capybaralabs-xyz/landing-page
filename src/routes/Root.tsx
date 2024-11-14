@@ -8,7 +8,7 @@ import MaskLeft from '../assets/mask_l.png'
 import MaskRight from '../assets/mask_r.png'
 const Root = () => {
   return (
-    <Flex w="100vw" minH={'100vh'} flexDir={"column"} gap={3} background={'#F9FBF8'}>
+    <Flex w="100vw" minH={'100vh'} flexDir={"column"} gap={3} background={'#F9FBF8'} overflow={'hidden'}>
       
       <Header />
       <Box width={'25.75%'} position={'absolute'} left={0} bottom={0}>
