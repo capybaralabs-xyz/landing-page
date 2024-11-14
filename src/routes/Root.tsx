@@ -1,32 +1,23 @@
-import { Box, Flex, Heading } from "@chakra-ui/react";
+import { Box, Flex, Image } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Header from "../components/Header";
 import lottie from "lottie-web";
 import { useEffect } from "react";
+import MaskLeft from '../assets/mask_l.png'
+import MaskRight from '../assets/mask_r.png'
 const Root = () => {
-  // useEffect(() => {
-  //   // const titleEle = document.getElementById('titleEle')
-  //   // typingTitle(titleEle!)
-  //   const animation = lottie.loadAnimation({
-  //     container: document.getElementById('bg')!, // 动画容器
-  //     renderer: 'svg',
-  //     loop: true, 
-  //     autoplay: true, 
-  //     path: 'bg_data.json' 
-  //   });
-  //   console.log('animation>>>>',animation)
-  // }, [])
   return (
-    <Flex w="100vw" flexDir={"column"} gap={3} background={'linear-gradient(180deg, #C6E3A0 -3.8%, #F9FBF8 100.99%)'}>
-      {/* <Box id="bg" position={'absolute'} top={'0'} left={'0'} w="100vw"></Box> */}
+    <Flex w="100vw" minH={'100vh'} flexDir={"column"} gap={3} background={'#F9FBF8'}>
+      
       <Header />
+      <Box width={'25.75%'} position={'absolute'} left={0} bottom={0}>
+        <Image src={MaskLeft} width={'100%'}/>
+      </Box>
       <Box flex={1}>
         <Outlet />
       </Box>
-      <Box backdropFilter={'blur(125px)'} background={'#90C147'} 
-
-      ></Box>
+      
     </Flex>
   );
 };

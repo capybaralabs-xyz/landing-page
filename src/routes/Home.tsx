@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import lottie, { AnimationItem } from 'lottie-web';
-import { Box,Text,Flex } from '@chakra-ui/react';
+import { Box,Text,Flex,Image } from '@chakra-ui/react';
 import useTypingEffect from '../hooks/useTypingText';
+import MaskLeft from '../assets/mask_l.png'
+import MaskRight from '../assets/mask_r.png'
 import _ from 'lodash'
 const Home = () => {
- 
+  const [tooltip, setTooltip] = useState({ visible: false, content: '', position: { x: 0, y: 0 } });
   useEffect(() => {
     const container = document.getElementById('lottie')
     const animation = lottie.loadAnimation({
@@ -27,21 +29,87 @@ const Home = () => {
       autoplay: true, 
       path: 'P2/data.json' 
     });
+
+    animation2.addEventListener('DOMLoaded', () => {
+      const layers = container2!.querySelectorAll('svg>g>g');  // 获取所有图层
+      const last8GElements = Array.from(layers).slice(-8);
+      for(let i = 0; i < last8GElements.length; i++) {
+        last8GElements[i].setAttribute('data-id', `${i+1}`)
+      }
+      // 为每个动物图层绑定事件
+      const elements = container2!.querySelectorAll('[data-id]');
+      elements.forEach(element => {
+        element.addEventListener('mouseenter', handleMouseEnter);
+        element.addEventListener('mouseleave', () => setTooltip({ visible: false, content: '', position: { x: 0, y: 0 } }));
+      });
+    });
+
+    // 监听 Lottie 动画中的元素的鼠标事件
+    const handleMouseEnter = (event:any) => {
+      const animalName = event.target.dataset.id;
+      const rect = event.target.getBoundingClientRect();
+      console.log("rect>>>", rect)
+      // const animal = animalData.find(animal => animal.name === animalName);
+      // console.log("event.target.height", event.target)
+      // if (animal) {
+        setTooltip({
+          visible: true,
+          content:  `test ${animalName}`, //animal.description,
+          position: { x: rect.left + rect.width/2, y: rect.top + window.scrollY },
+        });
+      // }
+    };
+
   
     return () => {
       animation.destroy()
+      container2!.querySelectorAll('[data-id]').forEach(element => {
+        element.removeEventListener('mouseenter', handleMouseEnter);
+        element.removeEventListener('mouseleave', () => setTooltip({ visible: false, content: '', position: { x: 0, y: 0 } }));
+      });
       animation2.destroy()
     };
   }, [])
   return (
     <>
-    <div id="lottie"></div>
-      <Flex direction={'column'} position={"absolute"} top={{base: '3.7rem',sm: '4.7rem', md: '8.7rem', lg: '12rem', xl: '15rem'}} zIndex={1} justifyContent={'center'} alignItems={'center'} width={'100%'} color={'#fff'} gap={2} fontFamily={'Alata'}>
-        <Box fontSize={{base: '1.8rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} fontWeight={'400'} dropShadow={'0px 0px 30px 0px #00000040'} id='titleEle'>Robust Code. Friend to All.</Box>
-      </Flex>
+    <Box>
+      
+      
+      <Box id="lottie" position={'relative'}>
 
-      <Text color={'#30241D'} fontSize={{base: '1.8rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} w={'100%'} textAlign={'center'}>our teams</Text>
-      <div id="content"></div>
+        <Box id="bg" position={'absolute'} top={0} left={0} right={0} bottom={0} background={'linear-gradient(180deg, #C6E3A0 -3.8%, #F9FBF8 100.99%)'}></Box>
+      </Box>
+    </Box>
+    <Flex direction={'column'} position={"absolute"} top={{base: '3.7rem',sm: '4.7rem', md: '8.7rem', lg: '12rem', xl: '15rem'}} zIndex={1} justifyContent={'center'} alignItems={'center'} width={'100%'} color={'#fff'} gap={2} fontFamily={'Alata'}>
+      <Box fontSize={{base: '1.8rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} fontWeight={'400'} dropShadow={'0px 0px 30px 0px #00000040'} id='titleEle' fontFamily={'Alata'}>Robust Code. Friend to All.</Box>
+    </Flex>
+
+      <Text position={'relative'} zIndex={2} color={'#30241D'} fontSize={{base: '1.8rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} w={'100%'} textAlign={'center'} fontFamily={'Alata'}>our teams</Text>
+      <Box>
+        <Box position={'relative'}>
+          <Box width={'23.61%'} position={'absolute'} right={0} bottom={'-24%'}>
+            <Image src={MaskRight} width={'100%'}/>
+          </Box>
+          <Box id="content"></Box>
+        </Box>
+        {tooltip.visible && (
+        <div
+          style={{
+            position: 'absolute',
+            top: tooltip.position.y + 10,
+            left: tooltip.position.x + 10,
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            color: '#fff',
+            padding: '10px',
+            borderRadius: '5px',
+            pointerEvents: 'none',
+            zIndex:2
+          }}
+        >
+          {tooltip.content}
+        </div>
+      )}
+      </Box>
     </>
     
   );

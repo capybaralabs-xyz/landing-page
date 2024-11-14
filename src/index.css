@@ -10,6 +10,7 @@ body {
 
 html, body {
   font-size: 10px;
+  background-color: #F9FBF8;
 }
 @keyframes typing {
   0% { width: 0;}
