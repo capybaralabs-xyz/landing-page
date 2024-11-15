@@ -5,8 +5,13 @@ import useTypingEffect from '../hooks/useTypingText';
 import MaskLeft from '../assets/mask_l.png'
 import MaskRight from '../assets/mask_r.png'
 import _ from 'lodash'
+import { Introductions } from '../utils';
+
+
+
 const Home = () => {
-  const [tooltip, setTooltip] = useState({ visible: false, content: '', position: { x: 0, y: 0 } });
+  const [tooltip, setTooltip] = useState({ visible: false, position: { x: 0, y: 0 } });
+  const [intro, setIntro] = useState<any>({})
   useEffect(() => {
     const container = document.getElementById('lottie')
     const animation = lottie.loadAnimation({
@@ -40,24 +45,21 @@ const Home = () => {
       const elements = container2!.querySelectorAll('[data-id]');
       elements.forEach(element => {
         element.addEventListener('mouseenter', handleMouseEnter);
-        element.addEventListener('mouseleave', () => setTooltip({ visible: false, content: '', position: { x: 0, y: 0 } }));
+        element.addEventListener('mouseleave', () => setTooltip({ visible: false, position: { x: 0, y: 0 } }));
       });
     });
 
     // 监听 Lottie 动画中的元素的鼠标事件
     const handleMouseEnter = (event:any) => {
-      const animalName = event.target.dataset.id;
+      const id = event.target.dataset.id;
       const rect = event.target.getBoundingClientRect();
       console.log("rect>>>", rect)
-      // const animal = animalData.find(animal => animal.name === animalName);
-      // console.log("event.target.height", event.target)
-      // if (animal) {
-        setTooltip({
-          visible: true,
-          content:  `test ${animalName}`, //animal.description,
-          position: { x: rect.left + rect.width/2, y: rect.top + window.scrollY },
-        });
-      // }
+      setTooltip({
+        visible: true,
+        position: { x: event.x, y: event.y + window.scrollY },
+      });
+      // @ts-ignore
+      setIntro(Introductions[`${id}`])
     };
 
   
@@ -65,7 +67,7 @@ const Home = () => {
       animation.destroy()
       container2!.querySelectorAll('[data-id]').forEach(element => {
         element.removeEventListener('mouseenter', handleMouseEnter);
-        element.removeEventListener('mouseleave', () => setTooltip({ visible: false, content: '', position: { x: 0, y: 0 } }));
+        element.removeEventListener('mouseleave', () => setTooltip({ visible: false, position: { x: 0, y: 0 } }));
       });
       animation2.destroy()
     };
@@ -93,21 +95,29 @@ const Home = () => {
           <Box id="content"></Box>
         </Box>
         {tooltip.visible && (
-        <div
+        <Box
           style={{
             position: 'absolute',
             top: tooltip.position.y + 10,
             left: tooltip.position.x + 10,
-            backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            color: '#fff',
-            padding: '10px',
-            borderRadius: '5px',
+            backgroundColor: '#fff',
+            boxShadow: '0px 4px 22.8px 0px #00000040',
+            color: '#000',
+            padding: '16px',
+            borderRadius: '14px',
             pointerEvents: 'none',
             zIndex:2
           }}
+          fontSize={'16px'}
+          
+          maxW={'260px'}
         >
-          {tooltip.content}
-        </div>
+          <Text>{intro.name}</Text>
+          <Text fontSize={'12px'} opacity={'0.4'}>{intro.position}</Text>
+          <Text>{intro.intro}
+          </Text>
+          
+        </Box>
       )}
       </Box>
     </>
