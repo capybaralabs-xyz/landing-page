@@ -22,7 +22,7 @@ const Home = () => {
       renderer: 'svg',
       loop: true, 
       autoplay: false, 
-      path: 'data_all3.json',
+      path: isMobile ? 'P1/mobile/data.json': 'P1/data_all3.json',
       rendererSettings: {
         progressiveLoad: true, // 优化加载性能
         preserveAspectRatio: 'xMidYMid meet',
@@ -74,7 +74,7 @@ const Home = () => {
       let tooltipTop = mouseY + window.scrollY - 60; // 上方显示 Popover
 
       if (tooltipLeft < 0) {
-        tooltipLeft = 0
+        tooltipLeft =30
       }
       // right
       if (tooltipLeft + 200 > screenWidth) {
@@ -84,6 +84,10 @@ const Home = () => {
       // bottom
       if (tooltipTop + 100 > screenHeight) {
         tooltipTop = mouseY + window.scrollY - 160; // 超过下边界时，向上调整
+      }
+
+      if (isMobile) {
+        tooltipLeft = (screenWidth - rect.width) /4
       }
       setTooltip({
         visible: true,
@@ -125,7 +129,7 @@ const Home = () => {
     
       {isTopLottieReady && <Text position={'relative'} zIndex={2} color={'#30241D'} fontSize={{base: '2.4rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} w={'100%'} textAlign={'center'} fontFamily={'Alata'}>our teams</Text>}
       <Box>
-        <Box position={'relative'}>
+        <Box position={'relative'} pb={{base: '2rem', md: '3rem',lg: '4.2rem', xl: '5.2rem'}}>
           <Box width={'23.61%'} position={'absolute'} right={0} top={{base: '0%', md: '-60%',lg: '-60%', xl: '-50%'}}>
             <Image src={MaskRight} width={'100%'}/>
           </Box>
