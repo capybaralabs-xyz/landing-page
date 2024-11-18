@@ -14,6 +14,7 @@ const Home = () => {
   const {isMobile} = useMobile()
   const [tooltip, setTooltip] = useState({ visible: false, position: { x: 0, y: 0 } });
   const [intro, setIntro] = useState<any>({})
+  const [isTopLottieReady, setIsTopLottieReady] = useState(false)
   useEffect(() => {
     const container = document.getElementById('lottie')
     const animation = lottie.loadAnimation({
@@ -21,10 +22,14 @@ const Home = () => {
       renderer: 'svg',
       loop: true, 
       autoplay: false, 
-      path: 'data_all3.json' 
+      path: 'data_all3.json',
+      rendererSettings: {
+        progressiveLoad: true, // 优化加载性能
+        preserveAspectRatio: 'xMidYMid meet',
+      },
     });
     animation.addEventListener('data_ready', () => {
-        console.log('ready')
+        setIsTopLottieReady(true)
         animation.play()
     })
     
@@ -117,8 +122,8 @@ const Home = () => {
     <Flex direction={'column'} position={"absolute"} top={{base: '8%',sm: '7%', md: '9%'}} lineHeight={{base: '1.2', sm: 'normal'}} zIndex={1} justifyContent={'center'} alignItems={'center'} width={'100%'} color={'#fff'} gap={2} fontFamily={'Alata'}>
       <Box fontSize={{base: '3.2rem', md: '4rem',lg: '4.8rem', xl: '6.4rem'}} fontWeight={'400'} display={'flex'} flexDirection={{base: 'column', sm: 'row'}} dropShadow={'0px 0px 30px 0px #00000040'} id='titleEle' fontFamily={'Alata'}><Text>Robust Code.</Text><Text>Friend to All.</Text></Box>
     </Flex>
-
-      <Text position={'relative'} zIndex={2} color={'#30241D'} fontSize={{base: '2.4rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} w={'100%'} textAlign={'center'} fontFamily={'Alata'}>our teams</Text>
+    
+      {isTopLottieReady && <Text position={'relative'} zIndex={2} color={'#30241D'} fontSize={{base: '2.4rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} w={'100%'} textAlign={'center'} fontFamily={'Alata'}>our teams</Text>}
       <Box>
         <Box position={'relative'}>
           <Box width={'23.61%'} position={'absolute'} right={0} top={{base: '0%', md: '-60%',lg: '-60%', xl: '-50%'}}>
