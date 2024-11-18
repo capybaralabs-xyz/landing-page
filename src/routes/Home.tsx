@@ -6,10 +6,12 @@ import MaskLeft from '../assets/mask_l.png'
 import MaskRight from '../assets/mask_r.png'
 import _ from 'lodash'
 import { Introductions } from '../utils';
+import { useMobile } from '../hooks/useMobile';
 
 
 
 const Home = () => {
+  const {isMobile} = useMobile()
   const [tooltip, setTooltip] = useState({ visible: false, position: { x: 0, y: 0 } });
   const [intro, setIntro] = useState<any>({})
   useEffect(() => {
@@ -27,12 +29,13 @@ const Home = () => {
     })
     
     const container2 = document.getElementById('content')
+    
     const animation2 = lottie.loadAnimation({
       container: container2!, // 动画容器
       renderer: 'svg',
       loop: true, 
       autoplay: true, 
-      path: 'P2/data.json' 
+      path: isMobile ? 'P2/mobile/data.json': 'P2/data.json'
     });
 
     animation2.addEventListener('DOMLoaded', () => {
@@ -61,16 +64,19 @@ const Home = () => {
       const screenWidth = window.innerWidth;
       const screenHeight = window.innerHeight;
 
-      // 计算 Popover 的显示位置
+      // position
       let tooltipLeft = mouseX + window.scrollX;
       let tooltipTop = mouseY + window.scrollY - 60; // 上方显示 Popover
 
-      // 判断右侧边界
+      if (tooltipLeft < 0) {
+        tooltipLeft = 0
+      }
+      // right
       if (tooltipLeft + 200 > screenWidth) {
         tooltipLeft = mouseX + window.scrollX - 200; // 超过右边界时，向左调整
       }
 
-      // 判断下方边界
+      // bottom
       if (tooltipTop + 100 > screenHeight) {
         tooltipTop = mouseY + window.scrollY - 160; // 超过下边界时，向上调整
       }
@@ -100,28 +106,25 @@ const Home = () => {
       });
       animation2.destroy()
     };
-  }, [])
+  }, [isMobile])
   return (
     <>
     <Box>
-      
-      
-      <Box id="lottie" position={'relative'}>
-
+      <Box id="lottie" position={'relative'} width={isMobile ? '914px': 'auto'} height={isMobile ? '508px': 'auto'} left={isMobile ? '50%': 0} ml={isMobile ? '-457px': 0}>
         <Box id="bg" position={'absolute'} top={0} left={0} right={0} bottom={0} background={'linear-gradient(180deg, #C6E3A0 -3.8%, #F9FBF8 100.99%)'}></Box>
       </Box>
     </Box>
-    <Flex direction={'column'} position={"absolute"} top={{base: '3.7rem',sm: '4.7rem', md: '8.7rem', lg: '12rem', xl: '15rem'}} zIndex={1} justifyContent={'center'} alignItems={'center'} width={'100%'} color={'#fff'} gap={2} fontFamily={'Alata'}>
-      <Box fontSize={{base: '1.8rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} fontWeight={'400'} dropShadow={'0px 0px 30px 0px #00000040'} id='titleEle' fontFamily={'Alata'}>Robust Code. Friend to All.</Box>
+    <Flex direction={'column'} position={"absolute"} top={{base: '8%',sm: '7%', md: '9%'}} lineHeight={{base: '1.2', sm: 'normal'}} zIndex={1} justifyContent={'center'} alignItems={'center'} width={'100%'} color={'#fff'} gap={2} fontFamily={'Alata'}>
+      <Box fontSize={{base: '3.2rem', md: '4rem',lg: '4.8rem', xl: '6.4rem'}} fontWeight={'400'} display={'flex'} flexDirection={{base: 'column', sm: 'row'}} dropShadow={'0px 0px 30px 0px #00000040'} id='titleEle' fontFamily={'Alata'}><Text>Robust Code.</Text><Text>Friend to All.</Text></Box>
     </Flex>
 
-      <Text position={'relative'} zIndex={2} color={'#30241D'} fontSize={{base: '1.8rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} w={'100%'} textAlign={'center'} fontFamily={'Alata'}>our teams</Text>
+      <Text position={'relative'} zIndex={2} color={'#30241D'} fontSize={{base: '2.4rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} w={'100%'} textAlign={'center'} fontFamily={'Alata'}>our teams</Text>
       <Box>
         <Box position={'relative'}>
-          <Box width={'23.61%'} position={'absolute'} right={0} bottom={'-24%'}>
+          <Box width={'23.61%'} position={'absolute'} right={0} top={{base: '0%', md: '-60%',lg: '-60%', xl: '-50%'}}>
             <Image src={MaskRight} width={'100%'}/>
           </Box>
-          <Box id="content"></Box>
+          <Box id="content" mt={isMobile ? '-5rem': 0}></Box>
         </Box>
         {tooltip.visible && (
         <Box
