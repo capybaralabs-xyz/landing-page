@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import lottie, { AnimationItem } from 'lottie-web';
-import { Box,Text,Flex,Image } from '@chakra-ui/react';
+import { Box,Text,Flex,Image, Popover, PopoverTrigger, PopoverContent } from '@chakra-ui/react';
 import useTypingEffect from '../hooks/useTypingText';
 import MaskLeft from '../assets/mask_l.png'
 import MaskRight from '../assets/mask_r.png'
@@ -15,6 +15,84 @@ const Home = () => {
   const [tooltip, setTooltip] = useState({ visible: false, position: { x: 0, y: 0 } });
   const [intro, setIntro] = useState<any>({})
   const [isTopLottieReady, setIsTopLottieReady] = useState(false)
+
+  const [popoverPosition, setPopoverPosition] = useState({ x: 0, y: 0 });
+  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
+
+  
+  // 监听 Lottie 动画中的元素的鼠标事件
+  const handleMouseEnter = (event:any) => {
+    const id = event.target.dataset.id;
+    const rect = event.target.getBoundingClientRect();
+    const mouseX = event.clientX;
+    const mouseY = event.clientY;
+    // 获取屏幕尺寸
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    // position
+    let tooltipLeft = mouseX + window.scrollX;
+    let tooltipTop = mouseY + window.scrollY - 60; // 上方显示 Popover
+
+    if (tooltipLeft < 0) {
+      tooltipLeft =30
+    }
+    // right
+    if (tooltipLeft + 200 > screenWidth) {
+      tooltipLeft = mouseX + window.scrollX - 200; // 超过右边界时，向左调整
+    }
+
+    // bottom
+    if (tooltipTop + 100 > screenHeight) {
+      tooltipTop = mouseY + window.scrollY - 160; // 超过下边界时，向上调整
+    }
+
+    if (isMobile) {
+      tooltipLeft = (screenWidth - rect.width) /4
+    }
+    setTooltip({
+      visible: true,
+      position: { x: tooltipLeft, y: tooltipTop },
+    });
+    // @ts-ignore
+    setIntro(Introductions[`${id}`])
+  };
+  const handleMouseLeave = () => {
+    setTooltip({visible: false, position: {x: 0, y: 0}})
+  }
+  const handleMouseMove = (event:any) => {
+    const rect = event.target.getBoundingClientRect();
+    const mouseX = event.clientX;
+    const mouseY = event.clientY;
+    // 获取屏幕尺寸
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
+    // position
+    let tooltipLeft = mouseX + window.scrollX;
+    let tooltipTop = mouseY + window.scrollY - 60; // 上方显示 Popover
+
+    if (tooltipLeft < 0) {
+      tooltipLeft =30
+    }
+    // right
+    if (tooltipLeft + 260 > screenWidth) {
+      tooltipLeft = mouseX + window.scrollX - 200; // 超过右边界时，向左调整
+    }
+
+    // bottom
+    if (tooltipTop + 260 > screenHeight) {
+      tooltipTop = mouseY + window.scrollY - 100; // 超过下边界时，向上调整
+    }
+
+    if (isMobile) {
+      tooltipLeft = (screenWidth - rect.width) /4
+    }
+
+    setTooltip({
+      visible: true,
+      position: { x: tooltipLeft, y: tooltipTop },
+    });
+  };
+
   useEffect(() => {
     const container = document.getElementById('lottie')
     const animation = lottie.loadAnimation({
@@ -53,65 +131,17 @@ const Home = () => {
       const elements = container2!.querySelectorAll('[data-id]');
       elements.forEach(element => {
         element.addEventListener('mouseenter', handleMouseEnter);
-        element.removeEventListener('mousemove', handleMouseMove);
-        element.addEventListener('mouseleave', () => setTooltip({ visible: false, position: { x: 0, y: 0 } }));
+        element.addEventListener('mousemove', handleMouseMove);
+        element.addEventListener('mouseleave', handleMouseLeave);
       });
     });
 
-    // 监听 Lottie 动画中的元素的鼠标事件
-    const handleMouseEnter = (event:any) => {
-      const id = event.target.dataset.id;
-      const rect = event.target.getBoundingClientRect();
-      const mouseX = event.clientX;
-      const mouseY = event.clientY;
-
-      // 获取屏幕尺寸
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-
-      // position
-      let tooltipLeft = mouseX + window.scrollX;
-      let tooltipTop = mouseY + window.scrollY - 60; // 上方显示 Popover
-
-      if (tooltipLeft < 0) {
-        tooltipLeft =30
-      }
-      // right
-      if (tooltipLeft + 200 > screenWidth) {
-        tooltipLeft = mouseX + window.scrollX - 200; // 超过右边界时，向左调整
-      }
-
-      // bottom
-      if (tooltipTop + 100 > screenHeight) {
-        tooltipTop = mouseY + window.scrollY - 160; // 超过下边界时，向上调整
-      }
-
-      if (isMobile) {
-        tooltipLeft = (screenWidth - rect.width) /4
-      }
-      setTooltip({
-        visible: true,
-        position: { x: tooltipLeft, y: tooltipTop },
-      });
-      // @ts-ignore
-      setIntro(Introductions[`${id}`])
-    };
-
-    const handleMouseMove = (event:any) => {
-      if (tooltip.visible) {
-        setTooltip({
-          visible: true,
-          position: { x: event.x, y: event.y + window.scrollY },
-        });
-      }
-    };
-  
     return () => {
       animation.destroy()
       container2!.querySelectorAll('[data-id]').forEach(element => {
         element.removeEventListener('mouseenter', handleMouseEnter);
         element.removeEventListener('mousemove', handleMouseMove);
-        element.removeEventListener('mouseleave', () => setTooltip({ visible: false, position: { x: 0, y: 0 } }));
+        element.removeEventListener('mouseleave', handleMouseLeave);
       });
       animation2.destroy()
     };
@@ -151,7 +181,7 @@ const Home = () => {
           }}
           fontSize={'16px'}
           
-          maxW={'260px'}
+          width={'260px'}
         >
           <Text>{intro.name}</Text>
           <Text fontSize={'12px'} opacity={'0.4'}>{intro.position}</Text>
@@ -160,6 +190,8 @@ const Home = () => {
           
         </Box>
       )}
+
+   
       </Box>
     </>
     
