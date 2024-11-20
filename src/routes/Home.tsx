@@ -15,10 +15,6 @@ const Home = () => {
   const [tooltip, setTooltip] = useState({ visible: false, position: { x: 0, y: 0 } });
   const [intro, setIntro] = useState<any>({})
   const [isTopLottieReady, setIsTopLottieReady] = useState(false)
-
-  const [popoverPosition, setPopoverPosition] = useState({ x: 0, y: 0 });
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-
   
   // 监听 Lottie 动画中的元素的鼠标事件
   const handleMouseEnter = (event:any) => {
@@ -100,7 +96,7 @@ const Home = () => {
       renderer: 'svg',
       loop: true, 
       autoplay: false, 
-      path: isMobile ? 'P1/mobile/data.json': 'P1/data_all3.json',
+      path: 'P1/mobile/data.json',
       rendererSettings: {
         progressiveLoad: true, // 优化加载性能
         preserveAspectRatio: 'xMidYMid meet',
