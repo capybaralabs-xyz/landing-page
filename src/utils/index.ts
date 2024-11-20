@@ -7,7 +7,7 @@ const gali = {
 const bella = {
 	name: 'Bella',
 	position: 'Developer',
-	intro: 'A frontend developer who loves life and coding, transitioning from Web2 to Web3. Embracing Web3 has opened up a world of new possibilities for me.'
+	intro: 'A frontend developer who loves life and coding. Embracing Web3 has opened up a world of new possibilities for me.'
 }
 const donny = {
 	name: 'Donny Du',
@@ -37,27 +37,27 @@ const zq = {
 const nj = {
 	name: 'NJ',
 	position: 'Developer',
-	intro: 'dadada'
+	intro: 'passionate about hiking, diving, and coding.'
 }
 export const Introductions = {
 	'1': gali,
 	'2': bella,
 	'3': donny,
-	'4': richards,
-	'5': jerry,
+	'4': nj,
+	'5': richards,
 	'6': lily,
 	'7': zq,
-	'8': nj,
+	'8': jerry,
 	
 }
 
 export const Introductions_M ={
 	'1': gali,
 	'2': donny,
-	'3': richards,
+	'3': nj,
 	'4': bella,
-	'5': jerry,
+	'5': richards,
 	'6': zq,
 	'7': lily,
-	'8': nj,
+	'8': jerry,
 }
