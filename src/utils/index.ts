@@ -59,5 +59,5 @@ export const Introductions_M ={
 	'5': richards,
 	'6': zq,
 	'7': lily,
-	'8': jerry,
+	'8': jerry, 
 }
