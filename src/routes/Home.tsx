@@ -5,7 +5,7 @@ import useTypingEffect from '../hooks/useTypingText';
 import MaskLeft from '../assets/mask_l.png'
 import MaskRight from '../assets/mask_r.png'
 import _ from 'lodash'
-import { Introductions } from '../utils';
+import { Introductions, Introductions_M } from '../utils';
 import { useMobile } from '../hooks/useMobile';
 
 
@@ -50,7 +50,8 @@ const Home = () => {
       position: { x: tooltipLeft, y: tooltipTop },
     });
     // @ts-ignore
-    setIntro(Introductions[`${id}`])
+    const _intro = isMobile ? Introductions_M[`${id}`] : Introductions[`${id}`]
+    setIntro(_intro)
   };
   const handleMouseLeave = () => {
     setTooltip({visible: false, position: {x: 0, y: 0}})
