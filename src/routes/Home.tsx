@@ -1,10 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import lottie, { AnimationItem } from 'lottie-web';
-import { Box,Text,Flex,Image, Popover, PopoverTrigger, PopoverContent } from '@chakra-ui/react';
-import useTypingEffect from '../hooks/useTypingText';
-import MaskLeft from '../assets/mask_l.png'
+import React, { useEffect, useState } from 'react';
+import lottie from 'lottie-web';
+import { Box,Text,Flex,Image} from '@chakra-ui/react';
+
 import MaskRight from '../assets/mask_r.png'
-import _ from 'lodash'
 import { Introductions, Introductions_M } from '../utils';
 import { useMobile } from '../hooks/useMobile';
 
@@ -17,7 +15,7 @@ const Home = () => {
   const [isTopLottieReady, setIsTopLottieReady] = useState(false)
   
   // 监听 Lottie 动画中的元素的鼠标事件
-  const handleMouseEnter = (event:any) => {
+  const handleMouseEnter = (event: any) => {
     const id = event.target.dataset.id;
     const rect = event.target.getBoundingClientRect();
     const mouseX = event.clientX;
@@ -150,8 +148,8 @@ const Home = () => {
         <Box id="bg" position={'absolute'} top={0} left={0} right={0} bottom={0} background={'linear-gradient(180deg, #C6E3A0 -3.8%, #F9FBF8 100.99%)'}></Box>
       </Box>
     </Box>
-    <Flex direction={'column'} position={"absolute"} top={{base: '8%',sm: '7%', md: '9%'}} lineHeight={{base: '1.2', sm: 'normal'}} zIndex={1} justifyContent={'center'} alignItems={'center'} width={'100%'} color={'#fff'} gap={2} fontFamily={'Alata'}>
-      <Box fontSize={{base: '3.2rem', md: '4rem',lg: '4.8rem', xl: '6.4rem'}} fontWeight={'400'} display={'flex'} flexDirection={{base: 'column', sm: 'row'}} dropShadow={'0px 0px 30px 0px #00000040'} id='titleEle' fontFamily={'Alata'}><Text>Robust Code.</Text><Text>Friend to All.</Text></Box>
+    <Flex direction={'column'} position={"absolute"} top={{base: '8%',sm: '7%', md: '9%', lg: '8%'}} lineHeight={{base: '1.2', sm: 'normal'}} zIndex={1} justifyContent={'center'} alignItems={'center'} width={'100%'} color={'#fff'} gap={2} fontFamily={'Alata'}>
+      <Box fontSize={{base: '3.2rem', md: '4rem',lg: '4.8rem', xl: '6.4rem'}} fontWeight={'400'} display={'flex'} flexDirection={{base: 'column', sm: 'row'}} dropShadow={'0px 0px 30px 0px #00000040'} id='titleEle' fontFamily={'Alata'} gap={'1rem'}><Text>Robust Code.</Text><Text>Friend to All.</Text></Box>
     </Flex>
     
       {isTopLottieReady && <Text position={'relative'} zIndex={2} color={'#30241D'} fontSize={{base: '2.4rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} w={'100%'} textAlign={'center'} fontFamily={'Alata'}>our teams</Text>}
