@@ -11,7 +11,7 @@ import { useMobile } from '../hooks/useMobile';
 const Home = () => {
   const {isMobile} = useMobile()
   const [tooltip, setTooltip] = useState({ visible: false, position: { x: 0, y: 0 } });
-  const [intro, setIntro] = useState<any>({})
+  const [intro, setIntro] = useState<any>({}) 
   const [isTopLottieReady, setIsTopLottieReady] = useState(false)
   
   // 监听 Lottie 动画中的元素的鼠标事件
