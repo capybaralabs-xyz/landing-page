@@ -154,7 +154,7 @@ const Home = () => {
     
       {isTopLottieReady && <Text position={'relative'} zIndex={2} color={'#30241D'} fontSize={{base: '2.4rem', sm: '2.8rem', md: '3.6rem',lg: '4.8rem', xl: '6.4rem'}} w={'100%'} textAlign={'center'} fontFamily={'Alata'}>our teams</Text>}
       <Box>
-        <Box position={'relative'} pb={{base: '2rem', md: '3rem',lg: '4.2rem', xl: '5.2rem'}}>
+        <Box position={'relative'} pb={{base: '5rem', md: '6rem',lg: '7.2rem', xl: '8.2rem'}}>
           <Box width={'23.61%'} position={'absolute'} right={0} top={{base: '0%', md: '-60%',lg: '-60%', xl: '-50%'}}>
             <Image src={MaskRight} width={'100%'}/>
           </Box>
